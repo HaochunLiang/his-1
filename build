@@ -1,0 +1,20 @@
+#!/usr/bin/sh
+echo '====Docker Build Scripts===='
+echo 'this script is to build docker container,ready....'
+
+echo 'ready to build HIS frontend ...'
+cd frontend && yarn build && cd ..
+
+#echo 'ready to build HIS backend ...'
+#cd backend && mvn package && cd ..
+#echo 'OK!'
+
+echo 'using configuration file docker-build.env...'
+rm .env
+cp docker-build.env .env
+
+echo 'ready to configure...'
+./configure
+docker-compose up
+
+echo 'docker build complete!'

@@ -1,0 +1,1 @@
+export default {serverProtocal:'http',serverHost:'localhost',serverPort:'8081'}

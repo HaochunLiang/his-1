@@ -1,0 +1,70 @@
+#!/usr/bin/node
+require('dotenv').config()
+const fs = require('fs')
+
+console.warn('loading configuration...')
+console.info(process.env)
+const env = process.env;
+
+fs.writeFile('./fileserver/.env',
+`FILE_SERVER_PROTOCAL=${env.HIS_FILE_SERVER_PROTOCAL}
+FILE_SERVER_DOMAIN=${env.HIS_FILE_SERVER_HOST}
+FILE_SERVER_PORT=${env.HIS_FILE_SERVER_PORT}
+STORE_DIR=${env.STORE_DIR}
+SIZE_LIMIT=${env.SIZE_LIMIT}
+MIDDLEWARE_PROTOCAL=${env.HIS_MIDDLEWARE_PROTOCAL}
+MIDDLEWARE_DOMAIN=${env.HIS_MIDDLEWARE_HOST}
+MIDDLEWARE_PORT=${env.HIS_MIDDLEWARE_PORT}
+`
+,(err)=>{
+  if(err) console.error(err)
+  else console.warn('generating fileserver configuration...OK.')
+})
+
+fs.writeFile('./middleware/.env',
+`DB_HOST=${env.DB_HOST}
+DB_USER=${env.DB_USER}
+DB_PASS=${env.DB_PASS}
+DB_NAME=${env.DB_NAME}
+DB_PORT=${env.DB_PORT}
+FILE_SERVER=${env.HIS_FILE_SERVER_PROTOCAL+'://'+env.HIS_FILE_SERVER_HOST+':'+env.HIS_FILE_SERVER_PORT}
+API_SERVER=${env.HIS_API_SERVER_PROTOCAL+'://'+env.HIS_API_SERVER_HOST+':'+env.HIS_API_SERVER_PORT}
+PORT=${env.HIS_MIDDLEWARE_PORT}
+MODE=${env.MODE}
+DEFAULT_INJECT_UID=${env.DEFAULT_INJECT_UID}`
+,(err)=>{
+  if(err) console.error(err)
+  else console.warn('generating middleware configuration...OK.')
+})
+
+fs.writeFile('./frontend/src/global/Config.jsx',
+`export default {serverProtocal:'${env.HIS_MIDDLEWARE_PROTOCAL}',serverHost:'${env.HIS_MIDDLEWARE_HOST}',serverPort:'${env.HIS_MIDDLEWARE_PORT}'}`
+  ,(err)=>{
+  if(err) console.err(err)
+  else console.warn('generating antd configuration...OK.')
+});
+
+fs.writeFile('./backend/src/main/resources/application.properties',
+`
+spring.datasource.url=jdbc:mysql://${env.DB_HOST}:${env.DB_PORT}/${env.DB_NAME}?useUnicode=true&zeroDateTimeBehavior=CONVERT_TO_NULL&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&failOverReadOnly=false&maxReconnects=10
+spring.datasource.username=${env.DB_USER}
+spring.datasource.password=${env.DB_PASS}
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+server.port=${env.HIS_API_SERVER_PORT}
+
+mybatis.mapper-locations=classpath:mapper/*.xml
+#spring.freemarker.cache=false
+#spring.thymeleaf.cache=true
+spring.devtools.restart.enabled=true
+spring.devtools.restart.additional-paths=src/main/java
+spring.devtools.restart.exclude=WEB-INF/**
+spring.servlet.multipart.max-file-size=10MB
+spring.servlet.multipart.max-request-size=40MB
+`
+  ,(err)=>{
+  if(err) console.err(err)
+  else console.warn('generating backend configuration...OK.')
+});
+
+console.info('All success.')

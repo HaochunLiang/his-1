@@ -1,0 +1,11 @@
+{
+  "name": "his",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/XUranus/his",
+  "author": "xuranus <2257238649wdx@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.0.0"
+  }
+}

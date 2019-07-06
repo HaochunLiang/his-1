@@ -1,0 +1,48 @@
+Arguments: 
+  /usr/bin/node /usr/bin/yarn install
+
+PATH: 
+  /home/xuranus/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/android-sdk/platform-tools:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/jvm/java-12-jdk:/home/xuranus/IDEA/clion-2019.1.2/bin
+
+Yarn version: 
+  1.16.0
+
+Node version: 
+  11.15.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.npm.taobao.org/cookie-parser: tunneling socket could not be established, cause=connect EINVAL 0.0.31.74:80 - Local (0.0.0.0:0)
+      at ClientRequest.onError (/usr/lib/node_modules/yarn/lib/cli.js:141076:17)
+      at Object.onceWrapper (events.js:281:20)
+      at ClientRequest.emit (events.js:193:13)
+      at Socket.socketErrorListener (_http_client.js:397:9)
+      at Socket.emit (events.js:193:13)
+      at emitErrorNT (internal/streams/destroy.js:91:8)
+      at emitErrorAndCloseNT (internal/streams/destroy.js:59:3)
+      at processTicksAndRejections (internal/process/task_queues.js:81:17)
+
+npm manifest: 
+  {
+    "name": "auth",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "dependencies": {
+      "cookie-parser": "^1.4.4",
+      "cookie-session": "^1.3.3",
+      "crypto": "^1.0.1",
+      "dotenv": "^8.0.0",
+      "express": "^4.17.1",
+      "http-proxy-middleware": "^0.19.1",
+      "mysql": "^2.17.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

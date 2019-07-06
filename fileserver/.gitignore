@@ -1,0 +1,5 @@
+/uploads
+/node_modules
+/files
+.env
+yarn.lock

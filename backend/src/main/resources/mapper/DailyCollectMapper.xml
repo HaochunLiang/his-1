@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.neu.his.bean.daily.DailyCollectMapper" >
+  <resultMap id="BaseResultMap" type="edu.neu.his.bean.daily.DailyCollect" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="start_time" property="start_time" jdbcType="VARCHAR" />
+    <result column="end_time" property="end_time" jdbcType="VARCHAR" />
+    <result column="user_id" property="user_id" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from daily_collect
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="edu.neu.his.bean.daily.DailyCollect" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into daily_collect (start_time, end_time, user_id
+      )
+    values (#{start_time,jdbcType=VARCHAR}, #{end_time,jdbcType=VARCHAR}, #{user_id,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="edu.neu.his.bean.daily.DailyCollect" >
+    update daily_collect
+    set start_time = #{start_time,jdbcType=VARCHAR},
+      end_time = #{end_time,jdbcType=VARCHAR},
+      user_id = #{user_id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, start_time, end_time, user_id
+    from daily_collect
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, start_time, end_time, user_id
+    from daily_collect
+  </select>
+</mapper>

@@ -1,0 +1,33 @@
+#!/usr/bin/sh
+echo 'ready to install HIS frontend ...'
+echo '[1] installing dotenv config parser...'
+yarn install
+echo '[2] installing file server dependencies...'
+cd fileserver && yarn install && cd ..
+echo '[3] installing frontend dependencies...'
+cd frontend && yarn install && cd ..
+echo '[4] installing middleware dependencies...'
+cd middleware && yarn install && cd ..
+echo 'OK!'
+
+echo 'use env file: dev.env'
+rm .env
+cp dev.env .env
+
+echo 'generating config...'
+node configure
+sleep 1
+
+echo 'ready to run middleware...'
+cd middleware && node index.js&
+echo 'middleware started.'
+sleep 1
+
+echo 'ready to run fileserver...'
+cd fileserver && node index.js& 
+echo 'started.'
+sleep 1
+
+echo 'ready to run webpack dev server...'
+cd frontend && yarn start
+echo 'started.'

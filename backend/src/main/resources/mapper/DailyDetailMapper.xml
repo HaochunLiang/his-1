@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.neu.his.bean.daily.DailyDetailMapper" >
+  <resultMap id="BaseResultMap" type="edu.neu.his.bean.daily.DailyDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="daily_collect_id" property="daily_collect_id" jdbcType="INTEGER" />
+    <result column="bill_record_id" property="bill_record_id" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from daily_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="edu.neu.his.bean.daily.DailyDetail" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into daily_detail (daily_collect_id, bill_record_id)
+    values (#{daily_collect_id,jdbcType=INTEGER}, #{bill_record_id,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="edu.neu.his.bean.daily.DailyDetail" >
+    update daily_detail
+    set daily_collect_id = #{daily_collect_id,jdbcType=INTEGER},
+      bill_record_id = #{bill_record_id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, daily_collect_id, bill_record_id
+    from daily_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, daily_collect_id, bill_record_id
+    from daily_detail
+  </select>
+</mapper>
